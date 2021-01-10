@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='row'>
+<div class='col-12'>
+<h1>Account</h1>
+<hr/>
+</div>
+<div class='col-12 col-md-3 my-3'>
+    <div class="card">
+      <div class="card-body"  style="background-color: rgb(0, 186, 199);">
+        <h4 class="card-title">Support</h4>
+            <div class='list-group' >
+                <a class='list-group-item' href='{% url "about" %}' style="background-color: rgb(188, 243, 240);">About</a>
+                <a class='list-group-item' href='{% url "contact" %}' style="background-color: rgb(188, 243, 240);">Contact</a>
+            </div>
+      </div>
+    </div>
+</div>
+
+
+
+<div class='col-12 col-md-3 my-3' id='billing'>
+    <div class="card">
+      <div class="card-body" style="background-color: rgb(0, 186, 199);">
+        <h4 class="card-title">Billing</h4>
+            <div class='list-group'>
+                <a class='list-group-item' href='{% url "orders:list" %}'style="background-color: rgb(188, 243, 240);">Orders</a>
+                <a class='list-group-item' href='{% url "billing-payment-method" %}' style="background-color: rgb(188, 243, 240);">Payment Methods</a>
+                <a class='list-group-item' href='{% url "addresses" %}' style="background-color: rgb(188, 243, 240);">Addresses</a>
+                
+                
+            </div>
+      </div>
+    </div>
+</div>
+
+
+<div class='col-12 col-md-3 my-3'>
+    <div class="card">
+      <div class="card-body" style="background-color: rgb(0, 186, 199);">
+        <h4 class="card-title">Account Details</h4> 
+            <div class='list-group'>
+                <a class='list-group-item' href='{% url "account:user-update" %}' style="background-color: rgb(188, 243, 240);">Update Details</a>
+                <a class='list-group-item' href='{% url "password_change" %}' style="background-color: rgb(188, 243, 240);">Change Password</a>
+                <a class='list-group-item' href='{% url "library" %}' style="background-color: rgb(188, 243, 240);">Library</a>
+                
+            </div>
+
+      </div>
+    </div>
+</div>
+
+
+<div class='col-12 col-md-3 my-3'>
+    <div class="card">
+      <div class="card-body" style="background-color: rgb(0, 186, 199);">
+        <h4 class="card-title">Preferences</h4> 
+            <div class='list-group'>
+                <a class='list-group-item' href='{% url "marketing-pref" %}' style="background-color: rgb(188, 243, 240);">Email Marketing</a>
+                
+            </div>
+
+      </div>
+    </div>
+</div>
+
+
+<div class='col-12 col-md-3 my-3'>
+    <div class="card">
+      <div class="card-body" style="background-color: rgb(0, 186, 199);">
+        <h4 class="card-title">History</h4> 
+              <div class='list-group'>
+                <a class='list-group-item' href='{% url "account:user-product-history" %}' style="background-color: rgb(188, 243, 240);">Products</a>
+            </div>
+      </div>
+    </div>
+</div>
+
+
+</div>
+
+
+{% endblock %}

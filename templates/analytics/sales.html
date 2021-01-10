@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 33.33%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#Home {background-color: rgb(94, 94, 94);}
+#News {background-color: rgb(94, 94, 94);}
+#Contact {background-color: rgb(94, 94, 94);}
+
+canvas {
+
+            background-color: white;
+        }
+</style>
+<div class='row my-5'>
+    <div class='col-12'>
+        <h1>Sales Data</h1>
+        <hr/>
+    </div>
+</div>
+
+<button class="tablink" onclick="openPage('Home', this, 'rgba(5, 153, 153, 0.966)')" id="defaultOpen">Today</button>
+<button class="tablink" onclick="openPage('News', this, 'rgba(5, 153, 153, 0.966)')" >This week</button>
+<button class="tablink" onclick="openPage('Contact', this, 'rgba(5, 153, 153, 0.966)')">This month</button>
+<div id="Home" class="tabcontent">
+    <div class='row my-5'>
+        <div class='col-4'>
+    
+            <h3>Today's sales</h3>
+            <hr/>
+            <p>Recent Total: ${{ today.recent_data.total__sum }}</p>
+                <ul>
+                {% for order in today.recent|slice:":5" %}
+                    <li class='my-3'>Order #{{ order.order_id }}<br/>
+                    ${{ order.total }}<br/>
+                    {{ order.updated|timesince }} ago</li>
+                {% endfor %}
+                </ul>
+            <p>Recent Moyen: ${{ today.recent_data.total__avg }}</p>
+    
+        </div>
+    
+    </div>
+</div>
+
+<div id="News" class="tabcontent">
+    <div class='row my-5'>
+        <div class='col-4'>
+            <h3>This week's sales</h3>
+            <hr/>
+            <p>Recent Total: ${{ this_week.recent_data.total__sum }}</p>
+                <ul>
+                {% for order in this_week.recent|slice:":5" %}
+                    <li class='my-3'>Order #{{ order.order_id }}<br/>
+                    ${{ order.total }}<br/>
+                    {{ order.updated|timesince }} ago</li>
+                {% endfor %}
+                </ul>
+            <p>Recent Moyen: ${{ this_week.recent_data.total__avg }}</p>
+        </div>
+    
+        <div class='col'>
+           <canvas class='cfe-render-chart' id="WeekSales" data-type='week' width="400" height="300"></canvas>
+        </div>
+    </div>
+</div>
+
+<div id="Contact" class="tabcontent">
+    <div class='row my-5'>
+        <div class='col-12'>
+            <h1>Previous 4 weeks</h1>
+        </div>
+        <div class='col'>
+            <p>Orders Total: ${{ last_four_weeks.recent_data.total__sum }}</p>
+            <p>Shipped Total: {% if last_four_weeks.shipped_data.total__sum %}${{ last_four_weeks.shipped_data.total__sum }} {% endif %}</p>
+            <p>Paid Totals: ${{ last_four_weeks.paid_data.total__sum }}</p>
+            <p>Recent Moyen: ${{ last_four_weeks.recent_data.total__avg }}</p>
+        </div>
+         <div class='col'>
+           <canvas class='cfe-render-chart' id="fourWeekSales" data-type='4weeks' width="400" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function openPage(pageName,elmnt,color) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+      }
+      document.getElementById(pageName).style.display = "block";
+      elmnt.style.backgroundColor = color;
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
+{% endblock %}
